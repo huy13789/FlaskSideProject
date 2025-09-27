@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+    <h2>Home</h2>
+
+    <p id="result">Đang tải dữ liệu...</p>
+
+    <script>
+        // Hàm gọi API
+        function callGetAPI() {
+            fetch('/get_test')  // Gọi tới API Flask
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Lỗi khi gọi API');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Hiển thị message từ API
+                    document.getElementById('result').innerText = data.message;
+                })
+                .catch(error => {
+                    document.getElementById('result').innerText = 'Lỗi: ' + error.message;
+                });
+        }
+
+        // Gọi hàm ngay khi trang load xong
+        window.onload = callGetAPI;
+    </script>
+</body>
+</html>
